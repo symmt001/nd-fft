@@ -3,7 +3,7 @@
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2FS0010--4655(99)00456--7-blue.svg)](https://doi.org/10.1016/S0010-4655(99)00456-7)
 [![Language: Fortran](https://img.shields.io/badge/language-Fortran%20%2F%20C-orange.svg)](#)
 
-This repository preserves the implementation code and benchmark framework accompanying the academic paper published in *Computer Physics Communications* (2000). The source code is made publicly available for readers of the paper.
+This repository is a static archive preserved for reference. It contains the implementation code and benchmark framework accompanying the academic paper published in *Computer Physics Communications* (2000). The source code is made publicly available for readers of the paper.
 
 ---
 
