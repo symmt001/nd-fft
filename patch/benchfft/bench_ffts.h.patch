@@ -1,0 +1,9 @@
+*** ../benchfft-2.0/bench_ffts.h	Sat Sep 12 02:57:47 1998
+--- bench_ffts.h	Wed Sep 30 15:08:30 1998
+***************
+*** 105,107 ****
+--- 105,108 ----
+  do_fft_func do_nag_3d_fft;
+  do_fft_func do_dxml_3d_fft;
+  do_fft_func do_sgimath_3d_fft;
++ do_fft_func do_yamamoto_fft;

@@ -1,0 +1,8 @@
+#! /bin/sh
+#@$-N 1
+#@$-lm 120mb
+#@$-lc 0mb
+#@$-lT "1:0:0"
+#@$
+cd $HOME/ftest/
+./test.sh

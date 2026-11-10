@@ -1,0 +1,305 @@
+CDIR = ftest
+
+### for Intel ###
+# ifc
+#F90 = ifc
+#F77 = ifc
+#OPT = -O -xiM -tpp6 -prefetch -vec -vec_report5 -auto
+#OPT = -g -pg -O -xW -tpp7
+#OPT = -Zp16 -pad -O3 -xW -tpp7 -pad
+
+#OPT = -openmp -Zp16 -pad -O3 -xW -tpp7 -fno-fnalias -prefetch
+#OPT = -openmp -Zp16 -pad -O3 -xW -tpp7 -fno-fnalias -w95
+#OPT = -openmp -g -O0 -save
+#BLAS = -L/opt/intel/mkl/lib/32 -lmkl_p4
+#F90OPT =  $(OPT)
+
+# pgf90
+F90 = pgf90
+F77 = pgf90
+#OPT = -O -g -Mprof=func
+#OPT = -Bstatic -O -fast -fastsse -Mvect=cachesize:524288 -tp p7
+OPT = -Bstatic -O -fast -fastsse -tp p7
+#BLAS = -lblas
+BLAS = -L/opt/intel/mkl/lib/32 -lmkl_p4 -lpthread
+F90OPT =  $(OPT)
+
+
+
+# ffc
+#F90 = f90
+#F77 = frt
+#F77 = f90
+#OPT = -O -Kauto -Kfast
+#BLAS = -lblasmt
+#F90OPT =  $(OPT)
+
+
+
+### for DEC ###
+#OPT = -O -align dcommons -arch host
+#OPT = -fast -arch host -recursive
+#OPT = -p1 -fast -arch host -recursive
+#OPT = -gen_feedback -recursive
+#Comment: to use feedback information, add  -feedback x.fb -O5 -fast
+#OPT = -O4 -fast -arch host -recursive
+#OPT = -w0 -O5 -ansi_alias -ansi_args -fp_reorder -tune host -std1 -recursive
+#COPT= -newc $(OPT)
+#BLAS= -ldxml
+#F90 = f90
+#F77 = f90
+#CC  = cc
+#BLAS = -lcxml
+
+### for Hewlett Packard HP-UX ###
+#for f90
+#F90OPT= -g +prof +O2 +Odata_prefetch
+#F90OPT= -g +prof +O2 +Odata_prefetch
+# for f77
+#OPT = -pg +O2 +Odata_prefetch
+#OPT = -O
+# for cc
+#COPT = $(OPT)
+
+### for Hitach HI-UX ###
+#F77 = hf77
+#OPT = -i,U -W0,'opt(o(4)),hap(diag(1)),list(s,p)'
+#OPT = -i,U -W0,'opt(o(4),fold(1)),pvec(diag(1)),list(s,p)'
+#OPT = -i,U -W0,'opt(o(4)),pvec(diag(1)),list(s,p),testmode(s,a(1))'
+#F90OPT = -W0,'opt(o(4)),pvec' -optlog
+#F90OPT = -limit -G -rdma -W0,'opt(o(4),allocinline(1)),pvec' -optlog
+#OPT = $(F90OPT)
+#COPT=
+
+### for NEC ###
+#OPT = -C hopt
+#OPT = -C sopt
+# The next option specifies that mfft should be expanded inline.
+#OPT = -C vopt -Wo'-I mfft'
+#OPT = -C vopt
+#for IMS
+#super
+#OPT = -C vopt -L/local/apl/sx3/asl
+#hsp
+#OPT = -C vopt -L/local/apl/hsp/asl
+#COPT = $(OPT)
+
+### for FreeBSD386 ###
+#F77 = g77 -L/usr/local/lib
+#CC  = gcc
+#OPT = -O2 -m486 -malign-loops=2 -malign-jumps=2 -malign-functions=2 \
+#-fomit-frame-pointer 
+#OPT = -O6 -fomit-frame-pointer -Wall -W -Wcast-qual -Wpointer-arith \
+#    -Wcast-align -malign-double
+#LIB =  -lm
+
+### for IBM ###
+#F77 = xlf
+#CC  = xlc
+#OPT = -O3 -qstrict -qarch=pwr2
+
+
+# Fujitsu Vector
+#F77 = frtpx
+#CC  = fccpx
+#F90 = f90px
+#OPT = -Aa -Of -Plt -Si -Eceilmpu
+#COPT=
+#F90OPT=$(OPT)
+
+
+TARGETS = \
+     nd1  nd2  nd3  nd4  nd5  nd6  nd7  nd8  nd9 \
+nd10      nd12           nd15 nd16      nd18 \
+nd20 nd21 nd22 nd23 nd24 nd25
+
+
+# These programs need BLAS.
+TARGETS_BLAS = nd11
+
+TARGETS_LATEST=nd2 nd20 nd24 nd25 ndfftw
+
+.f.o:
+	$(F77) $(OPT) -c $<
+.c.o:
+	$(CC) $(COPT) -c $<
+
+desc:
+	@echo "\n\n"
+	@echo type \'make test0\' OR \'make test1\' then,  "\n"
+	@echo type \'make nd?  [nd? [nd? [ ... ]]]\'  OR \'make all\' "\n""\n"
+
+C_NAME:
+	sh c_name.sh
+	sh optu.sh
+	touch C_NAME
+
+usrtime.c fftnd_fftw.c : C_NAME
+
+clean:
+	\rm -f *.o nd[0-9] nd[0-9][0-9]
+
+rclean: 
+	\rm -f *.o nd[0-9] nd[0-9][0-9] nd*.f
+
+TAR_CONT = ${CDIR}/*.f ${CDIR}/*.c ${CDIR}/Makefile* \
+${CDIR}/*.txt ${CDIR}/*.tex ${CDIR}/*.sh ${CDIR}/go* ${CDIR}/*.pl \
+${CDIR}/patch
+
+tar:
+	( cd .. ; tar cvf - $(TAR_CONT) | \
+	gzip -9 > nd_fft.tar.gz)
+
+all: $(TARGETS) $(TARGETS_BLAS)
+
+noblas: $(TARGETS)
+
+latest: $(TARGETS_LATEST)
+
+test0:
+		cp -f ffttest_0.f ffttest.f
+test1:
+		cp -f ffttest_1.f ffttest.f
+test2:
+		cp -f ffttest_2.f ffttest.f
+test3:
+		cp -f ffttest_3.f ffttest.f
+test4:
+		cp -f ffttest_4.f ffttest.f
+
+# test0 : standard 3-d test
+# test1 : Multi-dimensional test.  ceil(N/3) would be DIM
+# test2 : 1-d tests for all the basis
+# test3 : test for 1-d speed and precision
+# test4 : Multi-dimensional test. DIM must be giveb by hand
+
+BASE = fftprep2.f fftprep3.f fftprep4_dummy.f fftipost.f
+ndbase.f: $(BASE)
+	cat $(BASE) > ndbase.f
+OBASE= ffttest.o ndbase.o usrtime.o
+
+ndfftw: fftnd_fftw.o $(OBASE) libfftw.a
+	$(F77) $(OPT) -o $@ fftnd_fftw.o $(OBASE) libfftw.a -L/opt/intel/compiler60/ia32/lib/ -limf -lcxa
+ndasl: fftnd_asl.o transp_1.o $(OBASE)
+	$(F77) $(OPT) -o $@ fftnd_asl.o transp_1.o $(OBASE) -lasl
+ndzfft1d: fftnd_zfft1d.o transp_0.o $(OBASE)
+	$(F77) $(OPT) -o $@ fftnd_zfft1d.o transp_0.o $(OBASE) -L/opt/intel/mkl/lib/32/ -L/opt/intel/compiler60/ia32/lib/ -lmkl_p4 -lguide -lpthread
+ndmfft: fftnd_mfft.o $(OBASE) libmfft.a 
+	$(F77) $(OPT) -o $@ fftnd_mfft.o $(OBASE) libmfft.a
+ndgpfa: fftnd_gpfa.o $(OBASE) libgpfa.a
+	$(F77) $(OPT) -o $@ fftnd_gpfa.o $(OBASE) libgpfa.a
+ndgpfa2: fftnd_gpfa2.o transp_1.o $(OBASE) libgpfa.a
+	$(F77) $(OPT) -o $@ fftnd_gpfa2.o transp_1.o $(OBASE) libgpfa.a
+ndgpfas: gpfa_stride.o ndbase.o usrtime.o libgpfa.a
+	$(F77) $(OPT) -o $@ gpfa_stride.o ndbase.o usrtime.o libgpfa.a
+ndssl: fftnd_ssl.o $(OBASE)
+	$(F77) $(OPT) -o $@ fftnd_ssl.o $(OBASE) -lssl2vp
+ndsslx: fftnd_sslx.o usrtime.o
+	$(F77) $(OPT) -o $@ fftnd_sslx.o usrtime.o -lssl2vp
+nd20x: fftnd_20x.o usrtime.o
+	$(F77) $(OPT) -o $@ fftnd_20x.o usrtime.o
+
+$(TARGETS): % : ffttest.o usrtime.o %.f
+	$(F77) $(OPT) -o $@ $@.f ffttest.o usrtime.o $(LIB)
+
+$(TARGETS_BLAS): % : ffttest.o usrtime.o %.f
+	$(F77) $(OPT) -o $@ $@.f ffttest.o usrtime.o $(LIB) $(BLAS)
+
+SRC_NDF=$(TARGETS:%=%.f) $(TARGETS_BLAS:%=%.f)
+
+$(SRC_NDF): %.f : $(SRC.%)
+	cat $(SRC.$*) > $@
+
+TYPE0=fftprep1_0.f  fftprep2.f fftprep3.f fftprep4_dummy.f fftipost.f
+TYPE1=fftprep1_1.f  fftprep2.f fftprep3.f fftprep4_dummy.f fftipost.f
+TYPE2=fftprep1_0.f  fftprep2.f fftprep3.f fftprep4.f       fftipost.f
+
+# Rotate Left
+SRC.nd1 =fftnd_v0.f rearr_0.f $(TYPE0)
+SRC.nd2 =fftnd_v0.f rearr_1.f $(TYPE1)
+SRC.nd6 =fftnd_v1.f $(TYPE1)
+
+# Rotate Left Real Version
+SRC.nd3 =fftnd_vr1.f rearr_1.f $(TYPE1)
+
+# calling multiple FFT + small work space
+#SRC.nd4=fftnd_smf1.f mfft_1.f $(TYPE1)
+SRC.nd4=fftnd_smf1.f mfft_2.f \
+decn1m_1.f decn2m_1.f decn3m_1.f decx1m_1.f decx2m_1.f decx2fm_1.f $(TYPE1)
+#   nd4: in-place and no-bitrev method
+
+# calling multiple FFT without bit-reversal + optimized work space
+SRC.nd5=fftnd_smfnbw0.f mfftnb_3.f btrv_2.f btrvm_1.f \
+dec5fm_1.f dec4fm_1.f dec3fm_1.f dec2fm_1.f dec1fm_1.f dec4m_1.f $(TYPE2)
+SRC.nd7=fftnd_smfnbw2.f mfftnb_2.f btrv_2.f btrvm_1.f \
+dec3m_1.f dec2m_1.f dec1m_1.f dec3fm_1.f dec4m_1.f $(TYPE2)
+SRC.nd10=fftnd_smfnbw2.f mfftnb_2sr.f btrv_2.f btrvm_1.f \
+dec3m_1.f dec2m_1.f dec1m_1.f dec3fm_1.f $(TYPE2)
+
+# multiple FFT + transpose
+SRC.nd8 =fftnd_vtmf1.f  mfft_1.f transp_1.f $(TYPE1)
+SRC.nd9 =fftnd_vtmf1.f  mfft_2.f transp_1.f \
+decn1m_1.f decn2m_1.f decn3m_1.f decx1m_1.f decx2m_1.f decx2fm_1.f $(TYPE1)
+#   nd9: in-place and no-bitrev method
+
+# multiple call of FFT
+SRC.nd11=fftnd_stf1.f fft_2.f transp_blas.f \
+decn1_1.f decn2_1.f decn3_1.f decx1_1.f decx2_1.f decx2f_1.f $(TYPE0)
+#   nd11: in-place and no-bitrev method
+
+
+# multiple call of FFT without bit reversal
+SRC.nd12=fftnd_sfnb1.f fftnb_1.f $(TYPE2) \
+dec3fm_1.f dec4m_1.f dec3l_1.f dec2l_1.f dec1l_1.f
+
+# calling multiple FFT without bit reversal + using small work space
+# (bitreversal occurs in writing back to original place)
+SRC.nd15=fftnd_smfnb1.f mfftnb_1.f $(TYPE2)
+SRC.nd23=fftnd_smfnb2.f mfftnb_2.f fftnb_1.f \
+dec3m_1.f dec2m_1.f dec1m_1.f dec3fm_1.f dec4m_1.f \
+dec3l_1.f dec2l_1.f dec1l_1.f $(TYPE2)
+SRC.nd24=fftnd_smfnb1.f mfftnb_2.f \
+dec3m_1.f dec2m_1.f dec1m_1.f dec3fm_1.f dec4m_1.f $(TYPE2)
+SRC.nd25=fftnd_smfnb3.f mfftnb_2.f \
+dec3m_1.f dec2m_1.f dec1m_1.f dec3fm_1.f dec4m_1.f $(TYPE2)
+
+# calling multiple FFT without bit reversal + transpose
+SRC.nd16=fftnd_vtbmfnb1.f mfftnb_1.f transb_2.f $(TYPE2)
+#                               transb=transpose+bitrev
+SRC.nd21=fftnd_vtmfnb1.f  mfftnb_1.f transp_1.f $(TYPE2)
+#        in nd16, explicitly bitrev just after transposing
+#SRC.nd21=fftnd_vtmfnb1.f mfftnb_2.f transp_1.f \
+#dec3m_1.f dec2m_1.f dec1m_1.f dec3fm_1.f dec4m_1.f $(TYPE2)
+
+# calling multiple FFT without bit reversal + unrolling outer loop
+SRC.nd22=fftnd_svmfnb1.f mfftnb_1.f $(TYPE2)
+
+# calling multiple FFT + bitreversal without bitrev
+# (but not a in-place method)
+SRC.nd18=fftnd_vtmfw1.f mfftw_1.f transp_1.f $(TYPE1)
+SRC.nd20=fftnd_vtmfw1.f mfftw_2.f transp_1.f \
+decb3m_1.f decb2m_1.f decb1m_1.f decb3fm_1.f $(TYPE1)
+
+################ MPI ################
+MPI_OBJ = ffttest_mpi.o fftnd_mpi_mfftnb_2.o
+PARENT_FFT_OBJ = $(SRC.nd7:.f=.o)
+
+$(MPI_OBJ):
+	mpif90 -c  $(F90OPT) $*.f
+
+para: $(MPI_OBJ) $(PARENT_FFT_OBJ) usrtime.o
+	mpif90 -o para $(F90OPT) $(MPI_OBJ) $(PARENT_FFT_OBJ) usrtime.o
+
+OBJ.test=$(SRC.nd7:%.f=%.o)
+
+test: $(OBJ.test) usrtime.o ffttest.o
+	ifc $(OPT) -o test $(OBJ.test) usrtime.o ffttest.o
+
+transp_1.o: transp3.s
+	as -o transp_1.o transp3.s
+
+transp_0.o: transp3.s
+	as -o transp_0.o transp3.s
+
+#transp_0.o: transp_0c.c
+#	pgcc -Xa -c -o transp_0.o transp_0c.c

@@ -1,0 +1,130 @@
+*** ../benchfft-2.0/bench_ffts.c	Sat Sep 12 02:57:47 1998
+--- bench_ffts.c	Tue Oct 27 15:59:17 1998
+***************
+*** 504,509 ****
+--- 504,510 ----
+  			int size_arr, int size_work,
+  			short compute_accuracy, factor_type allowed_factors)
+  {
++ /*
+       if (rank != 1) return;
+       FFT_NAME("FFTPACK (f2c)");
+       if (N != 0) fftpack_cffti(N, work);
+***************
+*** 513,519 ****
+  		     fftpack_cfftb(N, arr, work),
+  		     1.0/N,
+  		     compute_accuracy);     	  
+! 
+  }
+  
+  short do_fftw_1d_fft(int rank, int *n, int *n_rev, int N, 
+--- 514,520 ----
+  		     fftpack_cfftb(N, arr, work),
+  		     1.0/N,
+  		     compute_accuracy);     	  
+! */
+  }
+  
+  short do_fftw_1d_fft(int rank, int *n, int *n_rev, int N, 
+***************
+*** 2752,2754 ****
+--- 2753,2850 ----
+  #endif
+  }
+  
++ #ifdef HAVE_F77
++ 
++ extern void FORTRANIZE(fftprep1,FFTPREP1)
++ 	 (int*, int*, int*, int*);
++ extern void FORTRANIZE(fftprep2,FFTPREP2)
++ 	 (int*, int*, int*, FFTW_COMPLEX*);
++ extern void FORTRANIZE(fftprep3,FFTPREP3)
++ 	 (int*, int*, FFTW_COMPLEX*);
++ extern void FORTRANIZE(fftprep4,FFTPREP4)
++ 	 (int*, int*, int*, FFTW_COMPLEX*, int*);
++ extern void FORTRANIZE(fftnd,FFTND)
++ 	 (int*, int*, int*, FFTW_COMPLEX*, FFTW_COMPLEX*, FFTW_COMPLEX*, int*);
++ 
++ void do_yamamoto_fft
++ (int rank, int *n, int *n_rev, int N, short is_power_of_two,
++                 FFTW_COMPLEX *arr, FFTW_COMPLEX *work,
++                 int size_arr, int size_work,
++                 short compute_accuracy, factor_type allowed_factors)
++ {
++ #define TRUE  (1==1)
++ #define FALSE (0==1)
++ 
++   int i,j,k,maxn,ok=TRUE;
++   int *n_f_ord=NULL, *bitrev=NULL;
++   FFTW_COMPLEX *phase=NULL, *cphase=NULL, *cwk=NULL;
++ 
++   if ( rank < 1 ) return;
++   FFT_REQUIRE_POWER_OF_TWO;     
++   FFT_NAME("Yamamoto");
++ 
++ 
++   if (N != 0) {
++ 
++ 	FFT_REQUIRE_POWER_OF_TWO;
++ 
++   /*    malloc for index array   */
++ 	n_f_ord=(int*)malloc(sizeof(int)*rank);
++ 	if(n_f_ord==NULL) skip_benchmark("YAMA:could not malloc n_f_ord");
++ 
++ 	maxn=0;
++ 	for(i=0; i<rank ; i++) {
++ 
++   /*  finding largest size  */
++ 	  if(n_rev[i] > maxn) maxn=n_rev[i];
++   /*  YAMA-FFT does not support  (FFT size) < 8 */
++ 	  if( n_rev[i] < 4 )   ok=FALSE;
++   /* finding log2 of index */
++ 	  for(j=1, k=0 ; j < n_rev[i]; j*=2, k++);
++ 	  if ( j != n_rev[i] ) ok=FALSE;
++ 	  n_f_ord[i]=k;
++       /*printf("n_f_ord[%i]=%i\n",i,k);*/
++ 	}
++   /*    malloc for work area   */
++ 	if(ok){
++ 	  /* printf("size of FFTW_COMPLEX=%i\n",sizeof(FFTW_COMPLEX)); */
++ 	  bitrev=(int*)malloc(sizeof(int)*maxn*rank);
++ 	  if(bitrev==NULL) skip_benchmark("YAMA:could not malloc bitrev");
++ 	  phase =(FFTW_COMPLEX*)malloc(sizeof(FFTW_COMPLEX)*maxn*rank/2);
++ 	  if(phase ==NULL) skip_benchmark("YAMA:could not malloc phase");
++ 	  cphase=(FFTW_COMPLEX*)malloc(sizeof(FFTW_COMPLEX)*maxn*rank/2);
++ 	  if(cphase==NULL) skip_benchmark("YAMA:could not malloc cphase");
++ 	  cwk   =(FFTW_COMPLEX*)malloc(sizeof(FFTW_COMPLEX)*N);
++ 	  if(cphase==NULL) skip_benchmark("YAMA:could not malloc cwk");
++ 
++ 	  FORTRANIZE(fftprep1,FFTPREP1)(&rank, &maxn, n_f_ord, bitrev);
++ 	  FORTRANIZE(fftprep2,fftprep2)(&rank, &maxn, n_f_ord, phase);
++ 	  FORTRANIZE(fftprep4,fftprep4)(&rank, &maxn, n_f_ord, phase, bitrev);
++ 	  /* printf("maxn*rank=%i\n",maxn*rank); */
++ 	  for(i=0 ; i< maxn*rank/2 ; i++)cphase[i]=phase[i];
++ 	  FORTRANIZE(fftprep3,fftprep3)(&rank, &maxn, cphase);
++ 	}
++   }
++   if (ok) {
++ 	DO_BENCHMARK_ND(rank, n, N, arr, arr,
++ 		  FORTRANIZE(fftnd,FFTND)
++              (&rank, &maxn, n_f_ord, arr, cwk, cphase, bitrev),
++           1.0, FFTW_FORWARD, 1,
++ 		  FORTRANIZE(fftnd,FFTND)
++              (&rank, &maxn, n_f_ord, arr, cwk,  phase, bitrev),
++           1.0/N,
++ 		  compute_accuracy);
++   }
++   else
++ 	skip_benchmark("YAMA:could not handle n[i] < 8, etc...");
++ 
++   if(ok) {
++ 	free(cwk);
++ 	free(cphase);
++ 	free(phase);
++ 	free(bitrev);
++ 	free(n_f_ord);
++   }
++ }
++ 
++ #endif

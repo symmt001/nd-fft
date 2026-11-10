@@ -1,0 +1,86 @@
+*** ../mfft/mfftri.f	Wed Sep 25 11:21:46 1991
+--- mfftri.f	Wed Oct 14 14:47:10 1998
+***************
+*** 2,8 ****
+  *
+  *   PURPOSE:
+  *       THIS ROUTINE PERFORMS THE PRE-PROCESSING PHASE FOR
+! *       REAL 2-DIMENSIONAL INVERSE DFT'S (SEE FORMULA (2.7)
+  *       IN REF.[1]).
+  *       PRE-PROCESSING ACTS ON SEQUENTAL DATA BEFORE A CALL TO
+  *       MFFTOV AN BEFORE COMPUTING THE IDFT (A CALL TO MFFTIV)
+--- 2,8 ----
+  *
+  *   PURPOSE:
+  *       THIS ROUTINE PERFORMS THE PRE-PROCESSING PHASE FOR
+! *       REAL*8 2-DIMENSIONAL INVERSE DFT'S (SEE FORMULA (2.7)
+  *       IN REF.[1]).
+  *       PRE-PROCESSING ACTS ON SEQUENTAL DATA BEFORE A CALL TO
+  *       MFFTOV AN BEFORE COMPUTING THE IDFT (A CALL TO MFFTIV)
+***************
+*** 14,26 ****
+  *   ARGUMENTS:
+  *      INPUT:
+  *       C : DATA ARRAY, OUTPUT FROM MFFTDV, MFFTOV; TO BE DECLARED
+! *                      REAL C(ISE*2,NE)
+  *           IN THE CALLING PROGRAM.
+  *     ISV : SEPARATION OF ELEMENTS IN A COLUMN OF C (USUALLY 1)
+  *     ISE : SEPARATION OF ELEMENTS IN A ROW OF C, DIVIDED BY 2
+  *      NV : NO. OF ELEMENTS TO BE PROCESSED IN A COLUMN OF C
+  *      NE : NO. OF ELEMENTS IN A ROW OF C, DIVIDED BY 2.
+! *      RW : COMPLEX ARRAY OF LENGHT AT LEAST NV; IT MUST
+  *           BE INITIALIZED BY A CALL TO MFFTRP; IT REMAINS
+  *           UNCHANGED IN OUTPUT.
+  *
+--- 14,26 ----
+  *   ARGUMENTS:
+  *      INPUT:
+  *       C : DATA ARRAY, OUTPUT FROM MFFTDV, MFFTOV; TO BE DECLARED
+! *                      REAL*8 C(ISE*2,NE)
+  *           IN THE CALLING PROGRAM.
+  *     ISV : SEPARATION OF ELEMENTS IN A COLUMN OF C (USUALLY 1)
+  *     ISE : SEPARATION OF ELEMENTS IN A ROW OF C, DIVIDED BY 2
+  *      NV : NO. OF ELEMENTS TO BE PROCESSED IN A COLUMN OF C
+  *      NE : NO. OF ELEMENTS IN A ROW OF C, DIVIDED BY 2.
+! *      RW : COMPLEX*16 ARRAY OF LENGHT AT LEAST NV; IT MUST
+  *           BE INITIALIZED BY A CALL TO MFFTRP; IT REMAINS
+  *           UNCHANGED IN OUTPUT.
+  *
+***************
+*** 27,33 ****
+  *  OUTPUT : POST-PROCESSED ARRAY C
+  *
+  *
+!       COMPLEX C(0:ISV-1,0:*),RW(0:*),T1,T2
+  *
+  *
+        IF(NV.GT.1) THEN
+--- 27,33 ----
+  *  OUTPUT : POST-PROCESSED ARRAY C
+  *
+  *
+!       COMPLEX*16 C(0:ISV-1,0:*),RW(0:*),T1,T2
+  *
+  *
+        IF(NV.GT.1) THEN
+***************
+*** 59,67 ****
+  *
+  *
+        DO 220 IE=0,(NE-1)*ISE,ISE
+!          RP=REAL(C(IE,0))+REAL(C(IE,NV))
+!          RM=REAL(C(IE,0))-REAL(C(IE,NV))
+!          C(IE,0)=CMPLX(RP,RM)
+   220  CONTINUE
+  *
+  *
+--- 59,67 ----
+  *
+  *
+        DO 220 IE=0,(NE-1)*ISE,ISE
+!          RP=DBLE(C(IE,0))+REAL(C(IE,NV))
+!          RM=DBLE(C(IE,0))-REAL(C(IE,NV))
+!          C(IE,0)=DCMPLX(RP,RM)
+   220  CONTINUE
+  *
+  *

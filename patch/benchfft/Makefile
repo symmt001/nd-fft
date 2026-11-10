@@ -1,0 +1,511 @@
+# Generated automatically from Makefile.in by configure.
+# Location of FFTW src directory (libfftw.a and fftw.h):
+FFTWDIR = ../fftw-2.0.1
+
+# IMPORTANT: -DCFLAGS below won't work on csh
+SHELL = /bin/sh
+
+# Dummy definitions:
+NRC_OBJ = 
+NRF_OBJ = 
+
+# NRC_OBJ = c_source/four1.o c_source/fourn.o c_source/realft.o
+  NRF_OBJ = f_source/four1.o f_source/fourn.o f_source/realft.o f_source/rlft3.o
+
+#############################################################################
+
+NIELSEN_OBJ = c_source/mixfft.o
+
+GREEN_OBJECTS = \
+  c_source/green/dxpose.o \
+  c_source/green/fft2d.o \
+  c_source/green/fftext.o \
+  c_source/green/fftlib.o \
+  c_source/green/matlib.o
+
+BERNSTEIN_OBJECTS = 
+
+# BERNSTEIN_OBJECTS = \
+  c_source/bernstein/fftc4.o \
+  c_source/bernstein/fftc4_1024.o \
+  c_source/bernstein/fftc4_128.o \
+  c_source/bernstein/fftc4_256.o \
+  c_source/bernstein/fftc4_32.o \
+  c_source/bernstein/fftc4_512.o \
+  c_source/bernstein/fftc4_64.o \
+  c_source/bernstein/fftc8.o \
+  c_source/bernstein/fftc8_1024.o \
+  c_source/bernstein/fftc8_128.o \
+  c_source/bernstein/fftc8_256.o \
+  c_source/bernstein/fftc8_32.o \
+  c_source/bernstein/fftc8_512.o \
+  c_source/bernstein/fftc8_64.o
+
+FXT_OBJECTS = c_source/fxt/aux4step.o \
+              c_source/fxt/fftdit4.o c_source/fxt/fftfht.o \
+              c_source/fxt/fht0.o c_source/fxt/fft4step.o \
+              c_source/fxt/fftdif4.o c_source/fxt/fftduh.o \
+              c_source/fxt/fft8dit.o c_source/fxt/fft8dif.o \
+              c_source/fxt/transpos2.o \
+              c_source/fxt/fht.o c_source/fxt/scramble.o
+
+GSL_OBJECTS = c_source/gsl/factorize.o c_source/gsl/errno.o \
+              c_source/gsl/bitreverse.o \
+              c_source/gsl/complex.o \
+              c_source/gsl/complex_init.o \
+              c_source/gsl/complex_pass_2.o \
+              c_source/gsl/complex_pass_3.o \
+              c_source/gsl/complex_pass_4.o \
+              c_source/gsl/complex_pass_5.o \
+              c_source/gsl/complex_pass_6.o \
+              c_source/gsl/complex_pass_7.o \
+              c_source/gsl/complex_pass_n.o \
+              c_source/gsl/complex_radix2.o \
+              c_source/gsl/real.o         c_source/gsl/real_pass_5.o \
+              c_source/gsl/real_init.o    c_source/gsl/real_pass_n.o \
+              c_source/gsl/real_pass_2.o  c_source/gsl/real_radix2.o \
+              c_source/gsl/real_pass_3.o  c_source/gsl/real_unpack.o \
+              c_source/gsl/real_pass_4.o \
+              c_source/gsl/halfcomplex.o \
+              c_source/gsl/halfcomplex_pass_5.o \
+              c_source/gsl/halfcomplex_init.o \
+              c_source/gsl/halfcomplex_pass_n.o \
+              c_source/gsl/halfcomplex_pass_2.o \
+              c_source/gsl/halfcomplex_radix2.o \
+              c_source/gsl/halfcomplex_pass_3.o \
+              c_source/gsl/halfcomplex_unpack.o \
+              c_source/gsl/halfcomplex_pass_4.o
+
+
+MAYER_OBJECTS = c_source/fft_mayer_1.o c_source/fht_mayer_1.o \
+                c_source/fft_mayer_5.o c_source/fht_mayer_5.o \
+                c_source/fft_mayer_7.o c_source/fht_mayer_7.o
+
+QFT_OBJECTS = c_source/qft/qftsubs.o
+
+C_OBJECTS = c_source/BeauregardFFT.o \
+            c_source/ComplexMath.o \
+            c_source/NAPACK.o \
+            c_source/b512.o \
+            c_source/bitrev.o \
+            c_source/cfftb.o \
+            c_source/cfftb1.o \
+            c_source/cfftf.o \
+            c_source/cfftf1.o \
+            c_source/cffti.o \
+            c_source/cffti1.o \
+            c_source/dint.o \
+            c_source/dintime.o \
+            c_source/fft.o \
+            c_source/fft_duhamel.o \
+            $(MAYER_OBJECTS) \
+	    $(QFT_OBJECTS) \
+            c_source/fourier.o \
+            c_source/ft.o \
+            c_source/go_fft.o \
+            c_source/realtr.o \
+            c_source/gpfa_gpfa.o \
+            c_source/gpfa_gpfa2f.o \
+            c_source/gpfa_gpfa3f.o \
+            c_source/gpfa_gpfa5f.o \
+            c_source/gpfa_gpfft3.o \
+            c_source/gpfa_setgpfa.o \
+            c_source/harmd.o \
+            c_source/idint.o \
+            c_source/idintime.o \
+            c_source/matteo_fft.o \
+            $(NIELSEN_OBJ) \
+            c_source/passb.o \
+            c_source/passb2.o \
+            c_source/passb3.o \
+            c_source/passb4.o \
+            c_source/passb5.o \
+            c_source/passf.o \
+            c_source/passf2.o \
+            c_source/passf3.o \
+            c_source/passf4.o \
+            c_source/passf5.o \
+            c_source/pda_dcfftb.o \
+            c_source/pda_dcfftf.o \
+            c_source/pda_dcffti.o \
+            c_source/pda_dcftb1.o \
+            c_source/pda_dcftf1.o \
+            c_source/pda_dcfti1.o \
+            c_source/pda_dnfftb.o \
+            c_source/pda_dnfftf.o \
+            c_source/pda_dpssb.o \
+            c_source/pda_dpssb2.o \
+            c_source/pda_dpssb3.o \
+            c_source/pda_dpssb4.o \
+            c_source/pda_dpssb5.o \
+            c_source/pda_dpssf.o \
+            c_source/pda_dpssf2.o \
+            c_source/pda_dpssf3.o \
+            c_source/pda_dpssf4.o \
+            c_source/pda_dpssf5.o \
+            c_source/pfafft.o \
+            c_source/tab.o \
+            c_source/w.o \
+            $(GREEN_OBJECTS) \
+            c_source/ooura.o \
+            c_source/fft4f2d.o \
+            c_source/bergland.o \
+            c_source/ransom/fastffts.o \
+            c_source/crandall.o \
+            c_source/fftoptim.o \
+            c_source/bloodworth/b-fht.o c_source/bloodworth/quad2fft.o \
+            $(NRC_OBJ) \
+	    $(FXT_OBJECTS) \
+	    $(BERNSTEIN_OBJECTS) \
+            $(GSL_OBJECTS)
+
+FFTPACK_F = \
+     f_source/fftpack/dcfftb.o \
+     f_source/fftpack/dcfftf.o \
+     f_source/fftpack/dcffti.o \
+     f_source/fftpack/dcftb1.o \
+     f_source/fftpack/dcftf1.o \
+     f_source/fftpack/dcfti1.o \
+     f_source/fftpack/dpssb.o \
+     f_source/fftpack/dpssb2.o \
+     f_source/fftpack/dpssb3.o \
+     f_source/fftpack/dpssb4.o \
+     f_source/fftpack/dpssb5.o \
+     f_source/fftpack/dpssf.o \
+     f_source/fftpack/dpssf2.o \
+     f_source/fftpack/dpssf3.o \
+     f_source/fftpack/dpssf4.o \
+     f_source/fftpack/dpssf5.o \
+     f_source/fftpack/scfftb.o \
+     f_source/fftpack/scfftf.o \
+     f_source/fftpack/scffti.o \
+     f_source/fftpack/scftb1.o \
+     f_source/fftpack/scftf1.o \
+     f_source/fftpack/scfti1.o \
+     f_source/fftpack/spssb.o \
+     f_source/fftpack/spssb2.o \
+     f_source/fftpack/spssb3.o \
+     f_source/fftpack/spssb4.o \
+     f_source/fftpack/spssb5.o \
+     f_source/fftpack/spssf.o \
+     f_source/fftpack/spssf2.o \
+     f_source/fftpack/spssf3.o \
+     f_source/fftpack/spssf4.o \
+     f_source/fftpack/spssf5.o \
+     f_source/fftpack/drfftb.o \
+     f_source/fftpack/drfftf.o \
+     f_source/fftpack/drffti.o \
+     f_source/fftpack/drftb1.o \
+     f_source/fftpack/drftf1.o \
+     f_source/fftpack/drfti1.o \
+     f_source/fftpack/dradb2.o \
+     f_source/fftpack/dradb3.o \
+     f_source/fftpack/dradb4.o \
+     f_source/fftpack/dradb5.o \
+     f_source/fftpack/dradbg.o \
+     f_source/fftpack/dradf2.o \
+     f_source/fftpack/dradf3.o \
+     f_source/fftpack/dradf4.o \
+     f_source/fftpack/dradf5.o \
+     f_source/fftpack/dradfg.o \
+     f_source/fftpack/sradb2.o \
+     f_source/fftpack/sradb3.o \
+     f_source/fftpack/sradb4.o \
+     f_source/fftpack/sradb5.o \
+     f_source/fftpack/sradbg.o \
+     f_source/fftpack/sradf2.o \
+     f_source/fftpack/sradf3.o \
+     f_source/fftpack/sradf4.o \
+     f_source/fftpack/sradf5.o \
+     f_source/fftpack/sradfg.o \
+     f_source/fftpack/srfftb.o \
+     f_source/fftpack/srfftf.o \
+     f_source/fftpack/srffti.o \
+     f_source/fftpack/srftb1.o \
+     f_source/fftpack/srftf1.o \
+     f_source/fftpack/srfti1.o
+
+
+
+GPFA_F = \
+     f_source/gpfa/gpfa.o \
+     f_source/gpfa/setgpfa.o \
+     f_source/gpfa/gpfa2f.o \
+     f_source/gpfa/gpfa3f.o \
+     f_source/gpfa/gpfa5f.o \
+     f_source/gpfa/gpfft3.o
+
+MFFT_F = \
+     f_source/mfft/c2fft.o \
+     f_source/mfft/c3fft.o \
+     f_source/mfft/c4fft.o \
+     f_source/mfft/mffta4.o \
+     f_source/mfft/mffta5.o \
+     f_source/mfft/mffta6.o \
+     f_source/mfft/mffta7.o \
+     f_source/mfft/mffta8.o \
+     f_source/mfft/mffta9.o \
+     f_source/mfft/mfftb4.o \
+     f_source/mfft/mfftb5.o \
+     f_source/mfft/mfftb6.o \
+     f_source/mfft/mfftb7.o \
+     f_source/mfft/mfftb8.o \
+     f_source/mfft/mfftb9.o \
+     f_source/mfft/mfftc4.o \
+     f_source/mfft/mfftc5.o \
+     f_source/mfft/mfftc6.o \
+     f_source/mfft/mfftc7.o \
+     f_source/mfft/mfftc8.o \
+     f_source/mfft/mfftc9.o \
+     f_source/mfft/mfftdm.o \
+     f_source/mfft/mfftds.o \
+     f_source/mfft/mfftdv.o \
+     f_source/mfft/mfftim.o \
+     f_source/mfft/mfftis.o \
+     f_source/mfft/mfftiv.o \
+     f_source/mfft/mfftom.o \
+     f_source/mfft/mfftov.o \
+     f_source/mfft/mfftp.o \
+     f_source/mfft/mfftp1.o \
+     f_source/mfft/mfftp2.o \
+     f_source/mfft/mfftp3.o \
+     f_source/mfft/mfftp4.o \
+     f_source/mfft/mfftrd.o \
+     f_source/mfft/mfftri.o \
+     f_source/mfft/mfftrp.o \
+     f_source/mfft/mfftz0.o \
+     f_source/mfft/r2fft.o \
+     f_source/mfft/r3fft.o \
+     f_source/mfft/r4fft.o
+
+MFFT_OBJ = # dummy definition
+  MFFT_OBJ = $(MFFT_F)
+
+SORENSEN_F = \
+     f_source/sorensen/csr1.o \
+     f_source/sorensen/csr2.o \
+     f_source/sorensen/icsrfft.o
+
+SORENSEN2_F = \
+     f_source/sorensen2/bitrev.o \
+     f_source/sorensen2/ffti.o \
+     f_source/sorensen2/rfftb.o \
+     f_source/sorensen2/rfftf.o
+
+PDA_F = \
+     f_source/pda/pda_cfftb.o \
+     f_source/pda/pda_cfftf.o \
+     f_source/pda/pda_cffti.o \
+     f_source/pda/pda_cfftb1.o \
+     f_source/pda/pda_cfftf1.o \
+     f_source/pda/pda_cffti1.o \
+     f_source/pda/pda_nfftb.o \
+     f_source/pda/pda_nfftf.o \
+     f_source/pda/pda_passb.o \
+     f_source/pda/pda_passb2.o \
+     f_source/pda/pda_passb3.o \
+     f_source/pda/pda_passb4.o \
+     f_source/pda/pda_passb5.o \
+     f_source/pda/pda_passf.o \
+     f_source/pda/pda_passf2.o \
+     f_source/pda/pda_passf3.o \
+     f_source/pda/pda_passf4.o \
+     f_source/pda/pda_passf5.o \
+     f_source/pda/pda_dcfftb.o \
+     f_source/pda/pda_dcfftf.o \
+     f_source/pda/pda_dcffti.o \
+     f_source/pda/pda_dcftb1.o \
+     f_source/pda/pda_dcftf1.o \
+     f_source/pda/pda_dcfti1.o \
+     f_source/pda/pda_dnfftb.o \
+     f_source/pda/pda_dnfftf.o \
+     f_source/pda/pda_dpssb.o \
+     f_source/pda/pda_dpssb2.o \
+     f_source/pda/pda_dpssb3.o \
+     f_source/pda/pda_dpssb4.o \
+     f_source/pda/pda_dpssb5.o \
+     f_source/pda/pda_dpssf.o \
+     f_source/pda/pda_dpssf2.o \
+     f_source/pda/pda_dpssf3.o \
+     f_source/pda/pda_dpssf4.o \
+     f_source/pda/pda_dpssf5.o 
+
+SCIPORT_F = f_source/sciport/ffts.o f_source/sciport/fftd.o 
+
+F_OBJECTS = $(FFTPACK_F) $(GPFA_F) $(MFFT_OBJ) $(SORENSEN_F) $(PDA_F) \
+            $(SORENSEN2_F) \
+	    $(SCIPORT_F) \
+            f_source/singleton.o f_source/realtr.o \
+	    f_source/burrus.o \
+	    f_source/monro.o \
+	    f_source/sfftfu.o \
+	    f_source/bailey-fft.o \
+            f_source/ooura.o \
+            f_source/fft4f2d.o \
+	    f_source/brenner.o \
+            $(NRF_OBJ) \
+	    f_source/harmd.o \
+	    fft-yama.o
+
+F90_OBJECTS = 
+#  f_source/emayer/fft_radix8_fwd_bench_rc.o \
+#  f_source/emayer/fft_radix8_rev_bench_rc.o
+
+BENCH_OBJECTS = bench.o bench_1d.o bench_utils.o bench_3d.o bench_ffts.o \
+                rbench_1d.o rbench_ffts.o rbench_2d.o rbench_2d_ffts.o
+
+F_OBJ = 
+F90_OBJ =
+  F_OBJ = $(F_OBJECTS)
+  F90_OBJ = $(F90_OBJECTS)
+
+OBJECTS = $(BENCH_OBJECTS) $(F_OBJ) $(F90_OBJ) $(C_OBJECTS)
+
+LIBPATHS = -L$(FFTWDIR)/fftw/.libs -L$(FFTWDIR)/src \
+	   -L$(FFTWDIR)/rfftw/.libs
+
+INCLUDE_FLAGS = -I. -I$(FFTWDIR)/fftw -I$(FFTWDIR)/src -I$(FFTWDIR)/rfftw
+
+# Put libraries that you need to link in here:
+LIBRARIES = $(LIBPATHS) -lfftw -lrfftw -lm -lcl
+
+###########################################################################
+
+# C flags that must be used:
+BENCH_CFLAGS = $(INCLUDE_FLAGS) -DHAVE_NIELSEN
+
+CC = cc
+CFLAGS = -Ae +O2 +Oall
+#CFLAGS = -Ae +O2
+F77 = f77
+FFLAGS = -O +ppu
+F90 = f90
+F90FLAGS = -O +ppu
+
+# SGI:
+# CFLAGS = -DUSE_SGIMATH -mips4  -O3 -64 -mips4 -WOPT:rsv_bits=4020 -IPA
+# FFLAGS = -64 -mips4 -O3
+
+###########################################################################
+
+all: bench
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(BENCH_CFLAGS) \
+		-DCFLAGS="\"$(CFLAGS)\"" \
+		-DFFLAGS="\"$(FFLAGS)\"" \
+		$< -o $@
+
+.f.o:
+	$(F77) -c $(FFLAGS) $< -o $@
+
+###########################################################################
+
+c_source/four1.c: extras/nr/four1.c c_source/four1.c.patch
+	patch -o $@ extras/nr/four1.c <c_source/four1.c.patch 
+
+c_source/fourn.c: extras/nr/fourn.c c_source/fourn.c.patch
+	patch -o $@ extras/nr/fourn.c <c_source/fourn.c.patch 
+
+c_source/realft.c: extras/nr/realft.c c_source/realft.c.patch
+	patch -o $@ extras/nr/realft.c <c_source/realft.c.patch 
+
+f_source/four1.f: extras/nr/four1.f f_source/four1.f.patch
+	patch -o $@ extras/nr/four1.f <f_source/four1.f.patch 
+
+f_source/fourn.f: extras/nr/fourn.f f_source/fourn.f.patch
+	patch -o $@ extras/nr/fourn.f <f_source/fourn.f.patch 
+
+f_source/realft.f: extras/nr/realft.f f_source/realft.f.patch
+	patch -o $@ extras/nr/realft.f <f_source/realft.f.patch 
+
+f_source/rlft3.f: extras/nr/rlft3.f f_source/rlft3.f.patch
+	patch -o $@ extras/nr/rlft3.f <f_source/rlft3.f.patch 
+
+###########################################################################
+
+c_source/mixfft.c: c_source/mixfft/mixfft.c c_source/mixfft.c.patch
+	patch -o $@ c_source/mixfft/mixfft.c <c_source/mixfft.c.patch 
+
+###########################################################################
+
+c_source/bernstein/fftc4.h: extras/djbfft-0.60/fftc4.h c_source/bernstein/fft.c
+	patch -o $@ extras/djbfft-0.60/fftc4.h <c_source/bernstein/fftc4.h.patch
+
+c_source/bernstein/fftc8.h: extras/djbfft-0.60/fftc8.h c_source/bernstein/fft.c
+	patch -o $@ extras/djbfft-0.60/fftc8.h <c_source/bernstein/fftc8.h.patch
+
+c_source/bernstein/fft.c: extras/djbfft-0.60/fft.c
+	cp -f extras/djbfft-0.60/fft.c $@
+
+c_source/bernstein/fftc4.c: extras/djbfft-0.60/fftc4.c c_source/bernstein/fftc4.h
+	cp -f extras/djbfft-0.60/fftc4.c $@
+
+c_source/bernstein/fftc4_1024.c: extras/djbfft-0.60/fftc4_1024.c c_source/bernstein/fftc4.h
+	cp -f extras/djbfft-0.60/fftc4_1024.c $@
+
+c_source/bernstein/fftc4_128.c: extras/djbfft-0.60/fftc4_128.c c_source/bernstein/fftc4.h
+	cp -f extras/djbfft-0.60/fftc4_128.c $@
+
+c_source/bernstein/fftc4_256.c: extras/djbfft-0.60/fftc4_256.c c_source/bernstein/fftc4.h
+	cp -f extras/djbfft-0.60/fftc4_256.c $@
+
+c_source/bernstein/fftc4_32.c: extras/djbfft-0.60/fftc4_32.c c_source/bernstein/fftc4.h
+	cp -f extras/djbfft-0.60/fftc4_32.c $@
+
+c_source/bernstein/fftc4_512.c: extras/djbfft-0.60/fftc4_512.c c_source/bernstein/fftc4.h
+	cp -f extras/djbfft-0.60/fftc4_512.c $@
+
+c_source/bernstein/fftc4_64.c: extras/djbfft-0.60/fftc4_64.c c_source/bernstein/fftc4.h
+	cp -f extras/djbfft-0.60/fftc4_64.c $@
+
+c_source/bernstein/fftc8.c: extras/djbfft-0.60/fftc8.c c_source/bernstein/fftc8.h
+	cp -f extras/djbfft-0.60/fftc8.c $@
+
+c_source/bernstein/fftc8_1024.c: extras/djbfft-0.60/fftc8_1024.c c_source/bernstein/fftc8.h
+	cp -f extras/djbfft-0.60/fftc8_1024.c $@
+
+c_source/bernstein/fftc8_128.c: extras/djbfft-0.60/fftc8_128.c c_source/bernstein/fftc8.h
+	cp -f extras/djbfft-0.60/fftc8_128.c $@
+
+c_source/bernstein/fftc8_256.c: extras/djbfft-0.60/fftc8_256.c c_source/bernstein/fftc8.h
+	cp -f extras/djbfft-0.60/fftc8_256.c $@
+
+c_source/bernstein/fftc8_32.c: extras/djbfft-0.60/fftc8_32.c c_source/bernstein/fftc8.h
+	cp -f extras/djbfft-0.60/fftc8_32.c $@
+
+c_source/bernstein/fftc8_512.c: extras/djbfft-0.60/fftc8_512.c c_source/bernstein/fftc8.h
+	cp -f extras/djbfft-0.60/fftc8_512.c $@
+
+c_source/bernstein/fftc8_64.c: extras/djbfft-0.60/fftc8_64.c c_source/bernstein/fftc8.h
+	cp -f extras/djbfft-0.60/fftc8_64.c $@
+
+###########################################################################
+
+f_source/emayer/fft_radix8_fwd_bench_rc.o: f_source/emayer/fft_radix8_fwd_bench_rc.f90
+	$(F90) -c $(F90FLAGS) $? -o $@
+
+f_source/emayer/fft_radix8_rev_bench_rc.o: f_source/emayer/fft_radix8_rev_bench_rc.f90
+	$(F90) -c $(F90FLAGS) $? -o $@
+
+###########################################################################
+
+bench_ffts.o: bench_utils.h bench_ffts.h bench-config.h
+rbench_ffts.o: bench_utils.h bench_ffts.h bench-config.h
+bench_1d.o: bench_utils.h bench_1d_protos.h bench_ffts.h bench-config.h
+bench_3d.o: bench_utils.h bench_3d_protos.h bench_ffts.h bench-config.h
+bench_utils.o: bench_utils.h bench-config.h
+bench.o: bench_utils.h bench-config.h
+
+bench: $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+
+submit: bench
+	./submit-script
+	cat submit.txt | mail "benchfft@theory.lcs.mit.edu"
+
+clean:
+	rm -f $(OBJECTS)
+
+realclean: clean
+	rm -f bench

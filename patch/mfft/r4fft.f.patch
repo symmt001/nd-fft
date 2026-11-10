@@ -1,0 +1,104 @@
+*** ../mfft/r4fft.f	Wed Sep 25 11:21:47 1991
+--- r4fft.f	Wed Oct 14 14:47:10 1998
+***************
+*** 4,22 ****
+  C R4FFT -- 4 Dimensional Real Fast Fourier Transformation
+  C
+  C PURPOSE:
+! C       THIS ROUTINE PERFORMS A 4-DIMENSIONAL REAL FOURIER TRANSFORM
+  C       OF ORDER N1*N2*N3*N4
+  C
+  C USAGE:
+  C       THE USER IS EXPECTED TO PROVIDE THE DATA IN A 4-DIMENSIONAL
+! C       REAL ARRAY C, DIMENSIONED IN THE CALLING PROGRAM AS
+  C
+! C          REAL C(ID1,ID2,N3,N4)
+  C
+  C       THE RESULTS ARE RETURNED IN THE SAME STORAGE SPACE AS A
+! C       COMPLEX ARRAY CCOM
+  C
+! C         COMPLEX CCOM(ID1/2,ID2,N3,N4)
+  C
+  C       ID1 MUST BE AN EVEN INTEGER EQUAL TO N1+2; FOR OPTIMAL PERFORMANCE,
+  C       ID1/2  AND ID2 SHOULD BE ODD, AND ID2 SHOULD BE EQUAL TO N2 OR
+--- 4,22 ----
+  C R4FFT -- 4 Dimensional Real Fast Fourier Transformation
+  C
+  C PURPOSE:
+! C       THIS ROUTINE PERFORMS A 4-DIMENSIONAL REAL*8 FOURIER TRANSFORM
+  C       OF ORDER N1*N2*N3*N4
+  C
+  C USAGE:
+  C       THE USER IS EXPECTED TO PROVIDE THE DATA IN A 4-DIMENSIONAL
+! C       REAL*8 ARRAY C, DIMENSIONED IN THE CALLING PROGRAM AS
+  C
+! C          REAL*8 C(ID1,ID2,N3,N4)
+  C
+  C       THE RESULTS ARE RETURNED IN THE SAME STORAGE SPACE AS A
+! C       COMPLEX*16 ARRAY CCOM
+  C
+! C         COMPLEX*16 CCOM(ID1/2,ID2,N3,N4)
+  C
+  C       ID1 MUST BE AN EVEN INTEGER EQUAL TO N1+2; FOR OPTIMAL PERFORMANCE,
+  C       ID1/2  AND ID2 SHOULD BE ODD, AND ID2 SHOULD BE EQUAL TO N2 OR
+***************
+*** 38,44 ****
+  C
+  C ARGUMENTS:
+  C       C:
+! C          DECLARED REAL C(ID1,ID2,N3,N4) IN THE CALLING PROGRAM
+  C          INPUT: ARRAY TO BE TRANSFORMED;
+  C          OUTPUT: TRANSFORMED ARRAY IF ISIG.NE.0; UNCHANGED IF ISIG.EQ.0
+  C       ID1:
+--- 38,44 ----
+  C
+  C ARGUMENTS:
+  C       C:
+! C          DECLARED REAL*8 C(ID1,ID2,N3,N4) IN THE CALLING PROGRAM
+  C          INPUT: ARRAY TO BE TRANSFORMED;
+  C          OUTPUT: TRANSFORMED ARRAY IF ISIG.NE.0; UNCHANGED IF ISIG.EQ.0
+  C       ID1:
+***************
+*** 67,77 ****
+  C                 N1 MUST BE A PRODUCT OF POWERS OF 2,3,5;
+  C       W1,W2,W3,W4:
+  C         THEY MUST BE DECLARED IN THE CALLING PROGRAM AS
+! C         INTEGER W1(6*N1+14),W2(4*N2+14),W3(4*N3+14),W4(4*N4+14)
+  C         IF ANY OF THE N'S ARE EQUAL, THE CORRESPONDING W'S
+  C         DON'T NEED TO BE DISTINCT.
+  C         INPUT: IF ISIG.NE.0, THE W'S MUST CONTAIN THE TABLES PREPARED
+! C                BY A PREVIOUS CALL WITH THE SAME ARGUMENTS BUT ISIG.EQ.0.
+  C         OUTPUT: IF ISIG.EQ.0, THE W ARE FILLED WITH THE TABLES REQUIRED
+  C                 FOR THE TRANSFORM. IF ISIG.NE.0, UNCHANGED.
+  C       IORD:
+--- 67,77 ----
+  C                 N1 MUST BE A PRODUCT OF POWERS OF 2,3,5;
+  C       W1,W2,W3,W4:
+  C         THEY MUST BE DECLARED IN THE CALLING PROGRAM AS
+! C         INTEGER*8 W1(6*N1+14),W2(4*N2+14),W3(4*N3+14),W4(4*N4+14)
+  C         IF ANY OF THE N'S ARE EQUAL, THE CORRESPONDING W'S
+  C         DON'T NEED TO BE DISTINCT.
+  C         INPUT: IF ISIG.NE.0, THE W'S MUST CONTAIN THE TABLES PREPARED
+! C                BY A PREVIOUS CALL WITH THE SAME ARGUMENTS BUT ISIG.EQ.0.D0
+  C         OUTPUT: IF ISIG.EQ.0, THE W ARE FILLED WITH THE TABLES REQUIRED
+  C                 FOR THE TRANSFORM. IF ISIG.NE.0, UNCHANGED.
+  C       IORD:
+***************
+*** 110,117 ****
+  C Fast Fourier Transformation on a Cray X-MP", Computer Physics
+  C Communications, vol. 40, pp 189-201 (1986).
+  C======================================================================*
+!         COMPLEX C(0:*)
+!         INTEGER W1(-14:*),W2(-14:*),W3(-14:*),W4(-14:*)
+          INTEGER IWORK(*)
+          INTEGER IDERR,FACERR,TBERR
+          PARAMETER(IDERR=1,FACERR=2,TBERR=3,ODDERR=4)
+--- 110,117 ----
+  C Fast Fourier Transformation on a Cray X-MP", Computer Physics
+  C Communications, vol. 40, pp 189-201 (1986).
+  C======================================================================*
+!         COMPLEX*16 C(0:*)
+!         INTEGER*8 W1(-14:*),W2(-14:*),W3(-14:*),W4(-14:*)
+          INTEGER IWORK(*)
+          INTEGER IDERR,FACERR,TBERR
+          PARAMETER(IDERR=1,FACERR=2,TBERR=3,ODDERR=4)

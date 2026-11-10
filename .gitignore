@@ -1,0 +1,35 @@
+# Object files and libraries
+*.o
+*.a
+*.so
+C_NAME
+
+# Build executables
+/nd[0-9]
+/nd[0-9][0-9]
+/nd*_asm
+/nd*_blas
+
+# Editor backup files
+*~
+*.swp
+*.swo
+
+# Local private notes & anecdotes (never uploaded to GitHub)
+*_local.*
+*_LOCAL.*
+LOCAL_*
+MEMORANDUM_LOCAL.md
+*.local
+
+# Local private drafts and notes (kept locally)
+*.tex
+*.eps
+*.dvi
+*.aux
+*.log
+
+# Third-party vendor sample codes (kept locally)
+hdlppmp.f
+multi_par.f
+multi_par.sh

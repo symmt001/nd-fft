@@ -1,0 +1,12 @@
+#
+#@$-q p04d
+#@$-o go.out
+#@$-eo
+#@$-mu *******@********************* -me
+#
+cd $HOME/ftest
+#./test.sh
+for i in ndhzft?m
+do echo $i >> test.out
+./$i >> test.out
+done

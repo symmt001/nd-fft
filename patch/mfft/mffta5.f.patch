@@ -1,0 +1,72 @@
+*** ../mfft/mffta5.f	Wed Sep 25 11:21:40 1991
+--- mffta5.f	Wed Oct 14 14:47:09 1998
+***************
+*** 2,8 ****
+  *
+  *   PURPOSE:
+  *       ELEMENTARY COOLEY-TUKEY RADIX 2 STEP APPLIED TO A VECTOR-OF
+! *       VECTORS-OF-COMPLEX C[IVS,NV [IES,NE]].
+  *       SEE REF.[1] FOR NOTATIONS.
+  *       THIS ROUTINE CAN BE USED ONLY BY ROUTINE MFFTIV, WHICH CONTROLS
+  *       ITS OPERATION THROUGH THE MFFTPA COMMON
+--- 2,8 ----
+  *
+  *   PURPOSE:
+  *       ELEMENTARY COOLEY-TUKEY RADIX 2 STEP APPLIED TO A VECTOR-OF
+! *       VECTORS-OF-COMPLEX*16 C[IVS,NV [IES,NE]].
+  *       SEE REF.[1] FOR NOTATIONS.
+  *       THIS ROUTINE CAN BE USED ONLY BY ROUTINE MFFTIV, WHICH CONTROLS
+  *       ITS OPERATION THROUGH THE MFFTPA COMMON
+***************
+*** 15,22 ****
+        COMMON /MFFTPA/  IMS,IVS,IES,NM,NV,NE,MX,LX,MLIM,MSTEP,LLIM,LSTEP,
+       $ NUSTEP,IVLIM,ILIM,MD2LIM,LD2LIM
+        INTEGER NUSTEP
+!       COMPLEX C(0:NUSTEP-1,0:*),T0,F
+!       COMPLEX FAC(0:*)
+   
+          IF(2*MX.GE.LX)THEN
+            IF(LX.EQ.1)GOTO 1000
+--- 15,22 ----
+        COMMON /MFFTPA/  IMS,IVS,IES,NM,NV,NE,MX,LX,MLIM,MSTEP,LLIM,LSTEP,
+       $ NUSTEP,IVLIM,ILIM,MD2LIM,LD2LIM
+        INTEGER NUSTEP
+!       COMPLEX*16 C(0:NUSTEP-1,0:*),T0,F
+!       COMPLEX*16 FAC(0:*)
+   
+          IF(2*MX.GE.LX)THEN
+            IF(LX.EQ.1)GOTO 1000
+***************
+*** 47,53 ****
+            DO 93 MU=LD2LIM+LSTEP,LD2LIM+LSTEP+MLIM,MSTEP
+   
+              DO 83 I=MU,MU+ILIM,IES
+!               T0=CMPLX(-AIMAG(C(I,1)),REAL(C(I,1)))
+                C(I,1)=C(I,0)-T0
+                C(I,0)=C(I,0)+T0
+  83          CONTINUE
+--- 47,53 ----
+            DO 93 MU=LD2LIM+LSTEP,LD2LIM+LSTEP+MLIM,MSTEP
+   
+              DO 83 I=MU,MU+ILIM,IES
+!               T0=DCMPLX(-DIMAG(C(I,1)),DBLE(C(I,1)))
+                C(I,1)=C(I,0)-T0
+                C(I,0)=C(I,0)+T0
+  83          CONTINUE
+***************
+*** 88,94 ****
+                C(I,0)=C(I,0)+T0
+  182         CONTINUE
+              DO 183 I=MU+LD2LIM+LSTEP,MU+LD2LIM+LSTEP+ILIM,IES
+!               T0=CMPLX(-AIMAG(C(I,1)),REAL(C(I,1)))
+                C(I,1)=C(I,0)-T0
+                C(I,0)=C(I,0)+T0
+  183         CONTINUE
+--- 88,94 ----
+                C(I,0)=C(I,0)+T0
+  182         CONTINUE
+              DO 183 I=MU+LD2LIM+LSTEP,MU+LD2LIM+LSTEP+ILIM,IES
+!               T0=DCMPLX(-DIMAG(C(I,1)),DBLE(C(I,1)))
+                C(I,1)=C(I,0)-T0
+                C(I,0)=C(I,0)+T0
+  183         CONTINUE

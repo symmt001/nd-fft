@@ -1,0 +1,9 @@
+F90OPT = -rdma -W0,'OPT(O(4)),PVEC(DIAG(1)),LIST(S,P)'
+MPI_OBJ = ffttest_mpi.o fftnd_mpi_mfftnb_1.o
+PARENT_FFT = nd21.o
+
+.f.o:
+	f90 -c  $(F90OPT) $*.f
+
+para: $(MPI_OBJ) $(PARENT_FFT) usrtime.o
+	f90 -o para $(F90OPT) $(MPI_OBJ) $(PARENT_FFT) usrtime.o -lfmpi -lmpi

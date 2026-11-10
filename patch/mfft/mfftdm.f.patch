@@ -1,0 +1,84 @@
+*** ../mfft/mfftdm.f	Wed Sep 25 11:21:44 1991
+--- mfftdm.f	Wed Oct 14 17:59:47 1998
+***************
+*** 23,36 ****
+  *           OF C ACCORDING TO THE DEFINITIONS ABOVE. THEY ARE UNCHANGED
+  *           ON OUTPUT
+  *       TABLES : ARRAY PREPARED BY MFFTP. IT  IS NOT CHANGED ON OUTPUT.
+! *                IT SHOULD BE DECLARED INTEGER TABLES(4*NM+14);
+  *                IT MUST BE INITIALIZED BY MFFTP BEFORE USAGE.
+  *    OUTPUT:
+  *       C : TRANSFORM OF THE ORIGINAL ARRAY; "BIT REVERSED" ORDER
+  *       IERR : ERROR CODE : =0 : SUCCESSFUL
+  *                         : =3 :  'TABLES' NOT CORRECTLY INITIALIZED
+!       COMPLEX C(*)
+!       INTEGER TABLES(-14:*)
+        INTEGER IDERR,FACERR,TBERR
+        PARAMETER (IDERR=1,FACERR=2,TBERR=3)
+        COMMON /MFFTPA/  IMS,IVS,IES,NM,NV,NE,MX,LX,MLIM,MSTEP,LLIM,LSTEP,
+--- 23,36 ----
+  *           OF C ACCORDING TO THE DEFINITIONS ABOVE. THEY ARE UNCHANGED
+  *           ON OUTPUT
+  *       TABLES : ARRAY PREPARED BY MFFTP. IT  IS NOT CHANGED ON OUTPUT.
+! *                IT SHOULD BE DECLARED INTEGER*8 TABLES(4*NM+14);
+  *                IT MUST BE INITIALIZED BY MFFTP BEFORE USAGE.
+  *    OUTPUT:
+  *       C : TRANSFORM OF THE ORIGINAL ARRAY; "BIT REVERSED" ORDER
+  *       IERR : ERROR CODE : =0 : SUCCESSFUL
+  *                         : =3 :  'TABLES' NOT CORRECTLY INITIALIZED
+!       COMPLEX*16 C(*)
+!       INTEGER*8 TABLES(-14:*)
+        INTEGER IDERR,FACERR,TBERR
+        PARAMETER (IDERR=1,FACERR=2,TBERR=3)
+        COMMON /MFFTPA/  IMS,IVS,IES,NM,NV,NE,MX,LX,MLIM,MSTEP,LLIM,LSTEP,
+***************
+*** 56,62 ****
+        RETURN
+  *...  RADIX 5 LOOP
+  500   CONTINUE
+!       DO 510 IM=1,TABLES(-12)
+          MX=MX/5
+          NUSTEP=MX*MSTEP
+          MLIM=NUSTEP-MSTEP
+--- 56,62 ----
+        RETURN
+  *...  RADIX 5 LOOP
+  500   CONTINUE
+!       DO 510 IM=1,INT(TABLES(-12))
+          MX=MX/5
+          NUSTEP=MX*MSTEP
+          MLIM=NUSTEP-MSTEP
+***************
+*** 67,73 ****
+  510   CONTINUE
+  *..  RADIX 3 LOOP
+  300   CONTINUE
+!       DO 310 IM=1,TABLES(-13)
+          MX=MX/3
+          NUSTEP=MX*MSTEP
+          MLIM=NUSTEP-MSTEP
+--- 67,73 ----
+  510   CONTINUE
+  *..  RADIX 3 LOOP
+  300   CONTINUE
+!       DO 310 IM=1,INT(TABLES(-13))
+          MX=MX/3
+          NUSTEP=MX*MSTEP
+          MLIM=NUSTEP-MSTEP
+***************
+*** 78,84 ****
+  310   CONTINUE
+  *..  RADIX 2 LOOP
+  200   CONTINUE
+!       DO 210 IM=1,TABLES(-14)
+          MX=MX/2
+          NUSTEP=MX*MSTEP
+          MLIM=NUSTEP-MSTEP
+--- 78,84 ----
+  310   CONTINUE
+  *..  RADIX 2 LOOP
+  200   CONTINUE
+!       DO 210 IM=1,INT(TABLES(-14))
+          MX=MX/2
+          NUSTEP=MX*MSTEP
+          MLIM=NUSTEP-MSTEP

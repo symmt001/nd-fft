@@ -1,0 +1,87 @@
+nd?.f    N-Dimensional FFT
+
+         When I began to creating these programs, I assumed
+    that n(i) >= 3 ( i.e, data size of each dim. >= 2**3 = 8 ).
+    Most programs works fine even for 1 <= n < 3, but user should
+    examine whether each program works correctly, by his own hand,
+    especially for 1 <= n <3.
+
+    1:  Decimation In Time (DIT) method
+    2:  loop merging at bit-reversal loop:
+          This improvement maximizes the the length of the inmost loop.
+    3:  real version of 2
+    4:  calling multiple FFT + small work space
+    5:  Similar to 25, but the way of using work space is slightly
+        different from 25. -> recursive call (+first 5 special)
+    6:  2 + special treatment in first decimation
+    7:  recursive call (+last 3 special)
+    8:  calling multiple FFT + transpose routine
+    9:  8 + self sorting algorithm
+    10: 7 + strided mfftnb(mfftnbs)
+    11: multiple call of FFT + transpose routine
+    12: multiple call of FFT without bit-reversal
+    15: using small work space + calling multiple FFT without bit-reversal
+          ( for effective use of cache line )
+    16: 15 + using transpose instead of using small work space
+           + avoiding bank conflict in transpose routine
+    18: just a test for 20 (proto-type of 20)
+		(calling multiple FFT + bit-reversal without bitrev)
+    20: calling multiple FFT with minimum memory copy
+           + bit-reversal without bitrev
+           + 8, 4, 2 point DIT routine
+           + special treatment for the first 8 point DIT
+	20x: Same as 20. But data configuration is different.
+         contiguous real part + contiguous imaginary part
+         ( "nd20x" is 30% faster than "nd20", on Fujitsu VPP )
+    21: Simplified 16 + transpose routine
+        This seems to be better than 16 on some machines,
+        in spite of extra memory copy.
+    22: 19 + reducing outer loop count in the calculation of first dimension
+         and increasing the inmost loop count.
+        (This routine is not a best one, but fast on both
+         scalar and vector machine.)
+    24: 15 + 16, 8, 4, 2 point DIT
+           + special treatment for the first 8 point DIT
+    25: Similar to 24, but the way of using work space is slightly
+        different from 24.
+
+    fftw: using fftwnd from fftw library
+    asl:  using JFCSSF from NEC's ASL
+    mfft: using C3FFT  from mfft
+    gpfa: using gpf3d  from Temperton's GPFA
+    gpfa2:using gpfa2f from Temperton's GPFA & special transpose routine
+            Special directives for the NEC's & Hitachi's vector machines
+          are inserted by S. Yamamoto.
+### Fastest Codes on Each Machines ###
+HP J2240
+    # RISC
+        128x128x118 1 ite  OPT = -gp +O2 (iunroll=2**5)
+        64x64x64   21 ite  OPT = -gp +O2 (iunroll=2**5)
+
+NEC SX-4
+    # VECTOR
+        128x128x118 1 ite  OPT = -C vopt (iunroll=2**5)
+
+
+NEC SX-3 
+    # VECTOR
+    # Theoretical performance is about 10 GFLOPS,
+           if I remember correctly.
+        128x128x118 11 ite  OPT = -C vopt
+        64x64x64 201 ite    OPT = -C vopt
+
+NEC HSP  64x64x64 201 ite    OPT = -C vopt
+
+NEC HPC  64x64x64 201 ite    OPT = -C vopt
+
+
+HITACHI S3800 128x128x118 41 ite OPT = -W0,'opt(o(4)),hap(diag(1))'
+# VECTOR # large bandwidth, hardware support for list vector
+
+FUJITSU VPP500 128x128x118 21 ite OPT = -Aa -Of -Plt -Si -Eceilmpu -Wv,-md
+# VECTOR # poor bandwidth?
+         # poor optimization? ( Theoretical performance
+             is comparable to SX-4, if I remember correctly. )
+         # poor precision? ( look at the detail result of 64x64x64x201 )
+
+FUJITSU VPP500 64x64x64 201 ite   OPT = -Aa -Of -Plt -Si -Eceilmpu -Wv,-md

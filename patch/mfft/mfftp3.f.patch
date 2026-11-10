@@ -1,0 +1,19 @@
+*** ../mfft/mfftp3.f	Wed Sep 25 11:21:45 1991
+--- mfftp3.f	Wed Oct 14 15:47:35 1998
+***************
+*** 2,8 ****
+  *
+  *     THIS SUBROUTINE PERFORMS A "BIT REVERSAL" PERMUTATION
+  *
+!       INTEGER INDX(MX,NX,LX),I1(MX,LX,NX)
+   
+   
+        DO 1 NU=1,NX
+--- 2,8 ----
+  *
+  *     THIS SUBROUTINE PERFORMS A "BIT REVERSAL" PERMUTATION
+  *
+!       INTEGER*8 INDX(MX,NX,LX),I1(MX,LX,NX)
+   
+   
+        DO 1 NU=1,NX

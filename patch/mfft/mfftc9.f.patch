@@ -1,0 +1,94 @@
+*** ../mfft/mfftc9.f	Wed Sep 25 11:21:43 1991
+--- mfftc9.f	Wed Oct 14 14:47:10 1998
+***************
+*** 2,8 ****
+  *
+  *   PURPOSE:
+  *       ELEMENTARY COOLEY-TUKEY RADIX 5 STEP APPLIED TO A VECTOR-OF
+! *       2-VECTORS-OF-COMPLEX C[IMS,NM [IVS,NV [IES,NE]]].
+  *       SEE REF.[1] FOR NOTATIONS.
+  *       THIS ROUTINE CAN BE USED ONLY BY ROUTINE MFFTIS, WHICH CONTROLS
+  *       ITS OPERATION THROUGH THE MFFTPA COMMON
+--- 2,8 ----
+  *
+  *   PURPOSE:
+  *       ELEMENTARY COOLEY-TUKEY RADIX 5 STEP APPLIED TO A VECTOR-OF
+! *       2-VECTORS-OF-COMPLEX*16 C[IMS,NM [IVS,NV [IES,NE]]].
+  *       SEE REF.[1] FOR NOTATIONS.
+  *       THIS ROUTINE CAN BE USED ONLY BY ROUTINE MFFTIS, WHICH CONTROLS
+  *       ITS OPERATION THROUGH THE MFFTPA COMMON
+***************
+*** 15,27 ****
+        COMMON /MFFTPA/  IMS,IVS,IES,NM,NV,NE,MX,LX,MLIM,MSTEP,LLIM,LSTEP,
+       $ NUSTEP,IVLIM,ILIM,MD2LIM,LD2LIM
+        INTEGER NUSTEP
+!       COMPLEX C(0:NUSTEP-1,0:4),FAC(0:*)
+!       COMPLEX T1,T2,T3,T4,T5
+!       REAL SIN72,RAD5D4,S36D72
+        PARAMETER (
+!      $ SIN72 =  9.51056516295153572116439333E-1,
+!      $ RAD5D4 =  5.59016994374947424102293417E-1,
+!      $ S36D72 =  6.18033988749894848204586834E-1 )
+   
+        IF(LX.NE.1)THEN
+            DO 200 MU=0,MLIM,MSTEP
+--- 15,27 ----
+        COMMON /MFFTPA/  IMS,IVS,IES,NM,NV,NE,MX,LX,MLIM,MSTEP,LLIM,LSTEP,
+       $ NUSTEP,IVLIM,ILIM,MD2LIM,LD2LIM
+        INTEGER NUSTEP
+!       COMPLEX*16 C(0:NUSTEP-1,0:4),FAC(0:*)
+!       COMPLEX*16 T1,T2,T3,T4,T5
+!       REAL*8 SIN72,RAD5D4,S36D72
+        PARAMETER (
+!      $ SIN72 =  9.51056516295153572116439333D-1,
+!      $ RAD5D4 =  5.59016994374947424102293417D-1,
+!      $ S36D72 =  6.18033988749894848204586834D-1 )
+   
+        IF(LX.NE.1)THEN
+            DO 200 MU=0,MLIM,MSTEP
+***************
+*** 43,52 ****
+                  T2=T2-T1
+                  T1=T3+S36D72*T4
+                  T3=S36D72*T3-T4
+!                 C(ILAM,1)=T5+CMPLX(-AIMAG(T1),REAL(T1))
+!                 C(ILAM,4)=T5-CMPLX(-AIMAG(T1),REAL(T1))
+!                 C(ILAM,2)=T2+CMPLX(-AIMAG(T3),REAL(T3))
+!                 C(ILAM,3)=T2-CMPLX(-AIMAG(T3),REAL(T3))
+                  ILAMF=ILAMF+1
+                  ILAMF2=ILAMF2+1
+                  ILAMF3=ILAMF3+1
+--- 43,52 ----
+                  T2=T2-T1
+                  T1=T3+S36D72*T4
+                  T3=S36D72*T3-T4
+!                 C(ILAM,1)=T5+DCMPLX(-DIMAG(T1),DBLE(T1))
+!                 C(ILAM,4)=T5-DCMPLX(-DIMAG(T1),DBLE(T1))
+!                 C(ILAM,2)=T2+DCMPLX(-DIMAG(T3),DBLE(T3))
+!                 C(ILAM,3)=T2-DCMPLX(-DIMAG(T3),DBLE(T3))
+                  ILAMF=ILAMF+1
+                  ILAMF2=ILAMF2+1
+                  ILAMF3=ILAMF3+1
+***************
+*** 70,79 ****
+                  T2=T2-T1
+                  T1=T3+S36D72*T4
+                  T3=S36D72*T3-T4
+!                 C(ILAM,1)=T5+CMPLX(-AIMAG(T1),REAL(T1))
+!                 C(ILAM,4)=T5-CMPLX(-AIMAG(T1),REAL(T1))
+!                 C(ILAM,2)=T2+CMPLX(-AIMAG(T3),REAL(T3))
+!                 C(ILAM,3)=T2-CMPLX(-AIMAG(T3),REAL(T3))
+  300           CONTINUE
+  350         CONTINUE
+  400       CONTINUE
+--- 70,79 ----
+                  T2=T2-T1
+                  T1=T3+S36D72*T4
+                  T3=S36D72*T3-T4
+!                 C(ILAM,1)=T5+DCMPLX(-DIMAG(T1),DBLE(T1))
+!                 C(ILAM,4)=T5-DCMPLX(-DIMAG(T1),DBLE(T1))
+!                 C(ILAM,2)=T2+DCMPLX(-DIMAG(T3),DBLE(T3))
+!                 C(ILAM,3)=T2-DCMPLX(-DIMAG(T3),DBLE(T3))
+  300           CONTINUE
+  350         CONTINUE
+  400       CONTINUE

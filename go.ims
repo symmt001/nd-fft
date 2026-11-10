@@ -1,0 +1,10 @@
+#! /bin/sh
+#@$-lF 10mb
+#@$-lc 0mb
+#@$-lM 100mb
+#@$-mu *** -me -mb
+#@$
+F_PROGINF=DETAIL
+export F_PROGINF
+cd $HOME/ftest
+./test.sh

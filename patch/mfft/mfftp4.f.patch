@@ -1,0 +1,63 @@
+*** ../mfft/mfftp4.f	Wed Sep 25 11:21:46 1991
+--- mfftp4.f	Wed Oct 14 18:09:40 1998
+***************
+*** 13,20 ****
+  *
+        INTEGER MAXFAC
+        PARAMETER(MAXFAC=3)
+!       INTEGER FACTAB(14)
+!       COMPLEX EXPTAB(0:*),SPETAB(0:*)
+        INTEGER FACTOR(MAXFAC)
+        DATA FACTOR/2,3,5/
+   
+--- 13,20 ----
+  *
+        INTEGER MAXFAC
+        PARAMETER(MAXFAC=3)
+!       INTEGER*8 FACTAB(14)
+!       COMPLEX*16 EXPTAB(0:*),SPETAB(0:*)
+        INTEGER FACTOR(MAXFAC)
+        DATA FACTOR/2,3,5/
+   
+***************
+*** 21,29 ****
+        MX=N
+        LX=1
+        J=0
+!       DO 50 IFACT=FACTAB(14),1,-1
+          NX=FACTOR(IFACT)
+!         DO 40 IPOW=1,FACTAB(IFACT)
+            MX=MX/NX
+            DO 30 NU=1,NX-1
+              DO 20 MU=0,MX-1
+--- 21,29 ----
+        MX=N
+        LX=1
+        J=0
+!       DO 50 IFACT=INT(FACTAB(14)),1,-1
+          NX=FACTOR(IFACT)
+!         DO 40 IPOW=1,INT(FACTAB(IFACT))
+            MX=MX/NX
+            DO 30 NU=1,NX-1
+              DO 20 MU=0,MX-1
+***************
+*** 39,47 ****
+        MX=N
+        LX=1
+        J=N*N1
+!       DO 100 IFACT=1,FACTAB(14)
+          NX=FACTOR(IFACT)
+!         DO 90 IPOW=1,FACTAB(IFACT)
+            MX=MX/NX
+            DO 80 NU=1,NX-1
+              DO 70 LAMBDA=0,LX-1
+--- 39,47 ----
+        MX=N
+        LX=1
+        J=N*N1
+!       DO 100 IFACT=1,INT(FACTAB(14))
+          NX=FACTOR(IFACT)
+!         DO 90 IPOW=1,INT(FACTAB(IFACT))
+            MX=MX/NX
+            DO 80 NU=1,NX-1
+              DO 70 LAMBDA=0,LX-1

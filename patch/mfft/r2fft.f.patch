@@ -1,0 +1,80 @@
+*** ../mfft/r2fft.f	Wed Sep 25 11:21:47 1991
+--- r2fft.f	Wed Oct 14 14:47:10 1998
+***************
+*** 1,11 ****
+         SUBROUTINE R2FFT(C,ID,NM,NN,WM,WN,ISIG,IORD,IWORK,IERR)
+  ****PURPOSE:
+! *       THIS ROUTINE PERFORMS A 2-DIMENSIONAL REAL FOURIER TRANSFORM,
+  *       OF ORDER NM*NN.
+  ****USAGE:
+  *       THE USER IS EXPECTED TO PROVIDE THE DATA IN A 2-DIMENSIONAL
+! *       REAL ARRAY C, DIMENSIONED IN THE CALLING PROGRAM C(ID,NN)
+! *       AND EQUIVALENCED TO A COMPLEX ARRAY CCOM(ID/2,NN).
+  *       WHEN A DIRECT TRASNFORM IS PERFORMED, HALF OF THE OUTPUT
+  *       COEFFICIENTS ARE CONTAINED IN CCOM(I,J) AS FOLLOWS
+  *        X(I,J)= CCOM(I,J) WITH I=1,(NM/2+1) AND J=1,NN
+--- 1,11 ----
+         SUBROUTINE R2FFT(C,ID,NM,NN,WM,WN,ISIG,IORD,IWORK,IERR)
+  ****PURPOSE:
+! *       THIS ROUTINE PERFORMS A 2-DIMENSIONAL REAL*8 FOURIER TRANSFORM,
+  *       OF ORDER NM*NN.
+  ****USAGE:
+  *       THE USER IS EXPECTED TO PROVIDE THE DATA IN A 2-DIMENSIONAL
+! *       REAL*8 ARRAY C, DIMENSIONED IN THE CALLING PROGRAM C(ID,NN)
+! *       AND EQUIVALENCED TO A COMPLEX*16 ARRAY CCOM(ID/2,NN).
+  *       WHEN A DIRECT TRASNFORM IS PERFORMED, HALF OF THE OUTPUT
+  *       COEFFICIENTS ARE CONTAINED IN CCOM(I,J) AS FOLLOWS
+  *        X(I,J)= CCOM(I,J) WITH I=1,(NM/2+1) AND J=1,NN
+***************
+*** 30,36 ****
+  *       IORD=0 ).
+  ****PARAMETERS :
+  *       INPUT :
+! *       C : ARRAY TO BE TRANSFORMED; DECLARED REAL C(ID,NN) IN THE
+  *           CALLING PROGRAM;
+  *       ID : FIRST DIMENSION OF C IN THE CALLING PROGRAM
+  *            IT MUST BE AN EVEN NUMBER EQUAL TO NM+2.
+--- 30,36 ----
+  *       IORD=0 ).
+  ****PARAMETERS :
+  *       INPUT :
+! *       C : ARRAY TO BE TRANSFORMED; DECLARED REAL*8 C(ID,NN) IN THE
+  *           CALLING PROGRAM;
+  *       ID : FIRST DIMENSION OF C IN THE CALLING PROGRAM
+  *            IT MUST BE AN EVEN NUMBER EQUAL TO NM+2.
+***************
+*** 55,61 ****
+  *                                 WARNING:THE FIRST DIMENSION IS ORDERED
+  *                                 IN ANY CASE BECAUSE OF POST-PROCESSING
+  *                                 (FOR DIRECT) AND PRE-PROCESSING FOR
+! *                                 INVERSE REAL TRANSFORMS
+  *       IWORK : INTEGER ARRAY, USED AS WORK AREA FOR REORDERING IF IORD=
+  *               1, MUST BE AT LEAST MAX(NM,NN) WORDS LONG.
+  *
+--- 55,61 ----
+  *                                 WARNING:THE FIRST DIMENSION IS ORDERED
+  *                                 IN ANY CASE BECAUSE OF POST-PROCESSING
+  *                                 (FOR DIRECT) AND PRE-PROCESSING FOR
+! *                                 INVERSE REAL*8 TRANSFORMS
+  *       IWORK : INTEGER ARRAY, USED AS WORK AREA FOR REORDERING IF IORD=
+  *               1, MUST BE AT LEAST MAX(NM,NN) WORDS LONG.
+  *
+***************
+*** 70,77 ****
+  *                                 ARE PRESENT IN DATA DIMENSIONS
+  *                            =3 : TABLES NOT CORRECTLY INITIALIZED
+  *                            =4 : FIRST DIMENSION IS AN ODD NUMBER
+!       COMPLEX C(*)
+!       INTEGER WM(-14:*),WN(-14:*)
+        INTEGER IWORK(*)
+  *
+        INTEGER IDERR,FACERR,TBERR,ODDERR
+--- 70,77 ----
+  *                                 ARE PRESENT IN DATA DIMENSIONS
+  *                            =3 : TABLES NOT CORRECTLY INITIALIZED
+  *                            =4 : FIRST DIMENSION IS AN ODD NUMBER
+!       COMPLEX*16 C(*)
+!       INTEGER*8 WM(-14:*),WN(-14:*)
+        INTEGER IWORK(*)
+  *
+        INTEGER IDERR,FACERR,TBERR,ODDERR

@@ -1,0 +1,9 @@
+#! /bin/sh -f
+#@$-q  s-unix
+#@$-lF 10mb
+#@$-LVM 10mb
+#@$-lT "0:20"
+#@$-mu ****** -me
+#@$
+cd $HOME/test
+time a.out

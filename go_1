@@ -1,0 +1,9 @@
+#! /bin/sh
+#@$-N  1
+#@$-lm 220mb
+#@$-lc 0mb
+#@$-lT "0:30:0"
+#@$
+cd $HOME
+/usr/mpi/bin/mpirun -n 1 -part ALL ./para >> test.out
+

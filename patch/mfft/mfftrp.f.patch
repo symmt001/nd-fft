@@ -1,0 +1,67 @@
+*** ../mfft/mfftrp.f	Wed Sep 25 11:21:46 1991
+--- mfftrp.f	Wed Oct 14 16:05:27 1998
+***************
+*** 1,7 ****
+        SUBROUTINE MFFTRP(NN,RW)
+  *
+  *  THIS ROUTINE PREPARES THE PHASE FACTOR TABLES TO BE USED IN THE
+! *  POST-PROCESSING PHASE IN REAL TRANSFORMS, I.E. R2FFT AND R3FFT.
+  *
+  *  THE DEFINITION OF PHASE FACTORS WE USE IS THE FOLLOWING
+  *
+--- 1,7 ----
+        SUBROUTINE MFFTRP(NN,RW)
+  *
+  *  THIS ROUTINE PREPARES THE PHASE FACTOR TABLES TO BE USED IN THE
+! *  POST-PROCESSING PHASE IN REAL*8 TRANSFORMS, I.E. R2FFT AND R3FFT.
+  *
+  *  THE DEFINITION OF PHASE FACTORS WE USE IS THE FOLLOWING
+  *
+***************
+*** 10,31 ****
+  *  WHERE THE SYMBOLS ARE:
+  *
+  *  I: IMAGINARY UNIT
+! *  NN : NUMBER OF REAL ELEMENTS
+  *  IV: RUNNING INDEX FROM 0 TO NN-1
+  *
+  *
+  *
+  *
+!       COMPLEX RW(0:*)
+  *
+  *
+!       PI2=8*ATAN(1.)
+        PHASE=PI2/NN
+!       RW(0)=(0.,-1.)
+  *
+  *
+        DO 10 I=1,NN-1
+!       RW(I)=CMPLX(-SIN(I*PHASE),-COS(I*PHASE))
+   10   CONTINUE
+  *
+  *
+--- 10,32 ----
+  *  WHERE THE SYMBOLS ARE:
+  *
+  *  I: IMAGINARY UNIT
+! *  NN : NUMBER OF REAL*8 ELEMENTS
+  *  IV: RUNNING INDEX FROM 0 TO NN-1
+  *
+  *
+  *
+  *
+!       COMPLEX*16 RW(0:*)
+!       REAL*8     PI2, PHASE
+  *
+  *
+!       PI2=8*ATAN(1.D0)
+        PHASE=PI2/NN
+!       RW(0)=(0.D0,-1.D0)
+  *
+  *
+        DO 10 I=1,NN-1
+!       RW(I)=DCMPLX(-SIN(I*PHASE),-COS(I*PHASE))
+   10   CONTINUE
+  *
+  *

@@ -1,0 +1,14 @@
+*** ../benchfft-2.0/bench_3d.c	Sat Sep 12 02:57:44 1998
+--- bench_3d.c	Sat Oct 17 17:01:47 1998
+***************
+*** 267,272 ****
+--- 267,275 ----
+  	  do_dxml_3d_fft(3,n,n_rev,N,is_power_of_two,
+  			 arr,work,size_arr,size_work,
+  			 compute_accuracy,allowed_factors);
++ 	  do_yamamoto_fft(3,n,n_rev,N,is_power_of_two,
++ 			 arr,work,size_arr,size_work,
++ 			 compute_accuracy,allowed_factors);
+  
+  	  /*******************************************************************/
+  
